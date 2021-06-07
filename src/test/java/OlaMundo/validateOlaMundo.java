@@ -18,8 +18,9 @@ public class validateOlaMundo {
 
     @Test
     public void GETOlaMundo() {
-        get("/ola").
-            then().
-                body(equalTo("Ola Mundo!"));
+        get("/ola")
+            .then()
+                .statusCode(200)
+                .body(equalTo("Ola Mundo!"));
     }
 }
