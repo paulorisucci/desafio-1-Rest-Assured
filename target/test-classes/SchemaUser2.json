@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "endereco": {
+      "type": "object",
+      "properties": {
+        "rua": {
+          "type": "string"
+        },
+        "numero": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "rua",
+        "numero"
+      ]
+    },
+    "age": {
+      "type": "integer"
+    },
+    "salary": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "endereco",
+    "age",
+    "salary"
+  ]
+}
