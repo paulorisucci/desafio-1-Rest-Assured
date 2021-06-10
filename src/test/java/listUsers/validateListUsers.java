@@ -19,7 +19,7 @@ public class validateListUsers {
     private static int[] idades = {30, 25, 20};
 
     @BeforeClass
-    public void defineURI() {
+    public void setup() {
         baseURI = "http://restapi.wcaquino.me/";
         response = given()
                     .contentType(ContentType.JSON)

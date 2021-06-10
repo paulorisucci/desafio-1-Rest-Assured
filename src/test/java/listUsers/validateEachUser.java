@@ -12,12 +12,8 @@ import static org.hamcrest.Matchers.*;
 public class validateEachUser {
 
     @BeforeClass
-    public void defineURI() {
+    public void setup(){
         baseURI = "http://restapi.wcaquino.me/";
-    }
-
-    @BeforeClass
-    public void requestSettings1() {
         given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON);

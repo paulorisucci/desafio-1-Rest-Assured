@@ -17,7 +17,7 @@ public class validateOlaMundo {
     }
 
     @Test
-    public void GETOlaMundo() {
+    public void getOlaMundo() {
         get("/ola")
             .then()
                 .statusCode(200)
