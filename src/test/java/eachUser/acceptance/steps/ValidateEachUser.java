@@ -1,25 +1,23 @@
-package listUsers;
+package eachUser.acceptance.steps;
 
 import static io.restassured.RestAssured.*;
 
+import cucumber.api.java.pt.*;
 import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
-public class validateEachUser {
+public class ValidateEachUser {
 
-    @BeforeClass
-    public void setup(){
-        baseURI = "http://restapi.wcaquino.me/";
+    @Dado("o site {string}")
+    public void setup(String site){
+        baseURI = site;
         given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON);
     }
 
-    @Test
+    @Entao("valida o primeiro usuario")
     public void validateUser1() {
         given()
             .get("/users/1")
@@ -32,9 +30,8 @@ public class validateEachUser {
                         .body("name", equalTo("João da Silva"))
                         .body("age", equalTo(30))
                         .body("salary", equalTo(1234.5678F));
-
     }
-    @Test
+    @E("valida o segundo usuario")
     public void validateUser2() {
         given()
            .get("/users/2")
@@ -50,8 +47,7 @@ public class validateEachUser {
                         .body("age", equalTo(25))
                         .body("salary", equalTo(2500));
     }
-
-    @Test
+    @E("valida o terceiro usuario")
     public void validateUser3() {
         given()
             .get("/users/3")
@@ -66,7 +62,7 @@ public class validateEachUser {
                         .body("filhos[0].name", equalTo("Zezinho"))
                         .body("filhos[1].name", equalTo("Luizinho"));
     }
-    @Test
+    @E("valida o quarto usuario")
     public void validateUser4() {
         given()
            .get("/users/4")

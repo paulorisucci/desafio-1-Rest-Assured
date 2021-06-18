@@ -1,16 +1,16 @@
-package listUsers;
+package listUsers.acceptance.steps;
 
 import static io.restassured.RestAssured.*;
 
+import cucumber.api.java.es.Dado;
+import cucumber.api.java.pt.*;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
-public class validateListUsers {
+public class ValidateListUsers {
 
     private static String param;
     private static Response response;
@@ -18,16 +18,20 @@ public class validateListUsers {
     private static String[] names = {"João da Silva", "Maria Joaquina", "Ana Júlia"};
     private static int[] idades = {30, 25, 20};
 
-    @BeforeClass
-    public void setup() {
-        baseURI = "http://restapi.wcaquino.me/";
+    @Dado("o site {string}")
+    public void setup(String site) {
+        baseURI = site;
+    }
+
+    @Quando("fizer uma requisição GET")
+    public void requisicaoGET(){
         response = given()
                     .contentType(ContentType.JSON)
                     .accept(ContentType.JSON)
                     .get("/users");
     }
 
-    @Test @BeforeClass
+    @Então("verifique a resposta")
     public void headerTest() {
         response
             .then()
@@ -35,14 +39,14 @@ public class validateListUsers {
                 .contentType(ContentType.JSON);
     }
 
-    @Test
+    @E("faça o teste de contrato")
     public void testeContrato() {
         response.then()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("GETListUsersSchema.json"));
     }
 
-    @Test
+    @E("valide os Ids")
     public void validarIds() {
         param = "id";
         response.then()
@@ -50,7 +54,8 @@ public class validateListUsers {
                     .body("[1]."+param, equalTo(ids[1]))
                     .body("[2]."+param, equalTo(ids[2]));
     }
-    @Test
+
+    @E("valide os nomes")
     public void validarNomes() {
         param = "name";
         response.then()
@@ -58,7 +63,8 @@ public class validateListUsers {
             .body("[1]."+param, equalTo(names[1]))
             .body("[2]."+param, equalTo(names[2]));
     }
-    @Test
+
+    @E("valide as idades")
     public void validarIdade() {
         param = "age";
         response.then()
@@ -67,7 +73,7 @@ public class validateListUsers {
             .body("[2]."+param, equalTo(idades[2]));
     }
 
-    @Test
+    @E("valide os endereços")
     public void validarEnderecos() {
         param = "endereco";
         response.then()
@@ -76,7 +82,8 @@ public class validateListUsers {
             .body("[1]."+param+".numero", equalTo(0))
             .body("[2]."+param, equalTo(null));
     }
-    @Test
+
+    @E("valide os dependentes")
     public void validarFilhos() {
         param = "filhos";
         response.then()
@@ -85,5 +92,4 @@ public class validateListUsers {
             .body("[2]."+param+"[0].name", equalTo("Zezinho"))
             .body("[2]."+param+"[1].name", equalTo("Luizinho"));
     }
-
 }
